@@ -4,12 +4,17 @@ const app = new Koa()
 // trust proxy
 app.proxy = true
 
+// MongoDB
+const mongoose = require('mongoose')
+console.log('connecting to MongoDB...')
+mongoose.connect(process.env.MONGODB_URI || 'localhost')
+
 // sessions
 const convert = require('koa-convert')
 const session = require('koa-generic-session')
 const MongoStore = require('koa-generic-session-mongo')
 
-app.keys = ['your-session-secret']
+app.keys = ['your-session-secret', 'another-session-secret']
 app.use(convert(session({
   store: new MongoStore()
 })))
@@ -17,6 +22,11 @@ app.use(convert(session({
 // body parser
 const bodyParser = require('koa-bodyparser')
 app.use(bodyParser())
+
+// csrf
+const csrf = require('koa-csrf')
+csrf(app)
+app.use(convert(csrf.middleware))
 
 // authentication
 require('./auth')
@@ -30,7 +40,8 @@ const route = require('koa-route')
 
 app.use(route.get('/', function(ctx) {
   ctx.type = 'html'
-  ctx.body = fs.createReadStream('views/login.html')
+  var body = fs.readFileSync('views/login.html', 'utf8')
+  ctx.body = body.replace('{csrfToken}', ctx.csrf)
 }))
 
 app.use(route.post('/custom', function(ctx, next) {

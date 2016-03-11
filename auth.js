@@ -1,10 +1,6 @@
 const passport = require('koa-passport')
 
-const mongoose = require('mongoose')
 const User = require('./models/user.js')
-
-console.log('connecting to MongoDB...')
-mongoose.connect(process.env.MONGODB_URI || 'localhost')
 
 User.findOne({ username: 'test' }, function (err, testUser) {
   if (!testUser) {
