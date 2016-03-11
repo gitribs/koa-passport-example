@@ -1,57 +1,67 @@
-var passport = require('koa-passport')
+const passport = require('koa-passport')
 
-var user = { id: 1, username: 'test' }
+const mongoose = require('mongoose')
+const User = require('./models/user.js')
+
+console.log('connecting to MongoDB...')
+mongoose.connect(process.env.MONGODB_URI || 'localhost')
+
+User.findOne({ username: 'test' }, function (err, testUser) {
+  if (!testUser) {
+    console.log('test user did not exist; creating test user...')
+    testUser = new User({
+      username: 'test',
+      password: 'test'
+    })
+    testUser.save()
+  }
+})
 
 passport.serializeUser(function(user, done) {
-  done(null, user.id)
+  done(null, user._id)
 })
 
 passport.deserializeUser(function(id, done) {
-  done(null, user)
+  User.findById(id, done);
 })
 
-var LocalStrategy = require('passport-local').Strategy
+const LocalStrategy = require('passport-local').Strategy
 passport.use(new LocalStrategy(function(username, password, done) {
-  // retrieve user ...
-  if (username === 'test' && password === 'test') {
-    done(null, user)
-  } else {
-    done(null, false)
-  }
+  User.findOne({ username: username, password: password }, done);
 }))
 
-var FacebookStrategy = require('passport-facebook').Strategy
+const FacebookStrategy = require('passport-facebook').Strategy
 passport.use(new FacebookStrategy({
     clientID: 'your-client-id',
     clientSecret: 'your-secret',
     callbackURL: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/facebook/callback'
   },
   function(token, tokenSecret, profile, done) {
-    // retrieve user ...
-    done(null, user)
+    // retrieve user
+    User.findOne({ facebook_id: profile.id }, done);
   }
 ))
 
-var TwitterStrategy = require('passport-twitter').Strategy
+const TwitterStrategy = require('passport-twitter').Strategy
 passport.use(new TwitterStrategy({
     consumerKey: 'your-consumer-key',
     consumerSecret: 'your-secret',
     callbackURL: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/twitter/callback'
   },
   function(token, tokenSecret, profile, done) {
-    // retrieve user ...
-    done(null, user)
+    // retrieve user
+    User.findOne({ twitter_id: profile.id }, done);
   }
 ))
 
-var GoogleStrategy = require('passport-google-auth').Strategy
+const GoogleStrategy = require('passport-google-auth').Strategy
 passport.use(new GoogleStrategy({
     clientId: 'your-client-id',
     clientSecret: 'your-secret',
     callbackURL: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/google/callback'
   },
   function(token, tokenSecret, profile, done) {
-    // retrieve user ...
-    done(null, user)
+    // retrieve user
+    User.findOne({ google_id: profile.id }, done);
   }
 ))

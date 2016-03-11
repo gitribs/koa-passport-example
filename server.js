@@ -7,8 +7,12 @@ app.proxy = true
 // sessions
 const convert = require('koa-convert')
 const session = require('koa-generic-session')
+const MongoStore = require('koa-generic-session-mongo')
+
 app.keys = ['your-session-secret']
-app.use(convert(session()))
+app.use(convert(session({
+  store: new MongoStore()
+})))
 
 // body parser
 const bodyParser = require('koa-bodyparser')
