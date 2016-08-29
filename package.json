@@ -21,7 +21,7 @@
     "koa-csrf": "^2.5.0",
     "koa-generic-session": "^1.11",
     "koa-generic-session-mongo": "^0.2.5",
-    "koa-passport": "^2.2",
+    "koa-passport": "^3.0.0-rc.1",
     "koa-route": "^3.1",
     "mongoose": "^4.5.7",
     "passport-facebook": "^2.1",
