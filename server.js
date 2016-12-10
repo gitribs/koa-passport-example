@@ -1,4 +1,5 @@
 const Koa = require('koa')
+const CSRF = require('koa-csrf').default
 const app = new Koa()
 
 // trust proxy
@@ -24,9 +25,12 @@ const bodyParser = require('koa-bodyparser')
 app.use(bodyParser())
 
 // csrf
-const csrf = require('koa-csrf')
-csrf(app)
-app.use(convert(csrf.middleware))
+app.use(new CSRF({
+  invalidSessionSecretMessage: 'Invalid session secret',
+  invalidSessionSecretStatusCode: 403,
+  invalidTokenMessage: 'Invalid CSRF token',
+  invalidTokenStatusCode: 403
+}))
 
 // authentication
 require('./auth')

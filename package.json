@@ -1,7 +1,7 @@
 {
-  "name": "koa-passport-example",
-  "author": "Markus Ast <npm.m@rkusa.st",
-  "version": "2.0.0",
+  "name": "koa-passport-example-mongo",
+  "author": "Nick Doiron <ndoiron@mapmeld.com>",
+  "version": "2.1.0",
   "private": true,
   "keywords": [
     "koa",
@@ -12,26 +12,26 @@
   "scripts": {
     "start": "node server"
   },
-  "homepage": "https://github.com/rkusa/koa-passport-example",
+  "homepage": "https://github.com/mapmeld/koa-passport-example",
   "dependencies": {
-    "handlebars": "^4.0",
-    "koa": "^2.0.0-alpha.4",
-    "koa-bodyparser": "^3.0",
-    "koa-convert": "^1.2",
-    "koa-csrf": "^2.5.0",
-    "koa-generic-session": "^1.11",
-    "koa-generic-session-mongo": "^0.2.5",
-    "koa-passport": "^3.0.0-rc.1",
-    "koa-route": "^3.1",
-    "mongoose": "^4.5.7",
-    "passport-facebook": "^2.1",
-    "passport-google-auth": "^1.0",
-    "passport-local": "^1.0",
-    "passport-twitter": "^1.0"
+    "handlebars": "^4.0.6",
+    "koa": "^2.0.0-alpha.7",
+    "koa-bodyparser": "^3.2.0",
+    "koa-convert": "^1.2.0",
+    "koa-csrf": "^3.0.4",
+    "koa-generic-session": "^1.11.4",
+    "koa-generic-session-mongo": "^0.3.0",
+    "koa-passport": "^3.0.0-rc.2",
+    "koa-route": "^3.2.0",
+    "mongoose": "^4.7.2",
+    "passport-facebook": "^2.1.1",
+    "passport-google-auth": "^1.0.1",
+    "passport-local": "^1.0.0",
+    "passport-twitter": "^1.0.4"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/rkusa/koa-passport-example.git"
+    "url": "git://github.com/mapmeld/koa-passport-example.git"
   },
   "engines": {
     "node": ">= 4"
