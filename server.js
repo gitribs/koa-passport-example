@@ -1,5 +1,5 @@
 const Koa = require('koa')
-const CSRF = require('koa-csrf').default
+const CSRF = require('koa-csrf')
 const app = new Koa()
 
 // trust proxy
